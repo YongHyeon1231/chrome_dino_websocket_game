@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { userModel } from '../models/user.model.js';
-import { handleConnection, handleDisconnect } from './helper.js';
+import { handleConnection, handleDisconnect, handleEvent } from './helper.js';
 
 
 // io.on은 Socket.IO 서버에서 전체 연결에 대한 이벤트를 처리할 때 사용
@@ -17,11 +17,11 @@ const registerHandler = (io) => {
         // 접속시 유저 정보 생성 이벤트 처리
         handleConnection(socket, userUUID);
         
+        // 모든 서비스 이벤트 처리
+        socket.on('event', (data) => handleEvent(io, socket, data));
 
         // 유저 접속 해제시 이벤트
-        socket.on('disconnect', (socket) => {
-            handleDisconnect(socket, userUUID);
-        });
+        socket.on('disconnect', (socket) => handleDisconnect(socket, userUUID));
     })
 }
 

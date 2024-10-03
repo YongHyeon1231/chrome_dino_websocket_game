@@ -22,7 +22,7 @@ export const stageModel = {
     getStage: (uuid) => {
         return stages[uuid];
     },
-    setStage: (uuid, id) => {
-        return stages[uuid].push({id});
+    setStage: (uuid, id, timestamp) => {
+        return stages[uuid].push({id, timestamp});
     }
 }
