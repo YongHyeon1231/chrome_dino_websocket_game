@@ -26,7 +26,10 @@ export const moveStageHandler = (userId, payload) => {
     // 1초당 1점, 10점이상 다음스테이지 이동, 오차범위 5
     // 클라이언트와 서버 간의 통신 지연시간을 고려해서 오차범위 설정
     // elapsedTime 은 10 이상 11 이하 일 경우만 통과
-    if (elapsedTime < 10 || elapsedTime > 11) {
+    console.log("serverTime => ", serverTime)
+    console.log("currentStage.timestamp=> ", currentStage.timestamp)
+    console.log("elapsedTime => ", elapsedTime)
+    if (elapsedTime < 9.5 || elapsedTime > 10.5) {
         return { status: 'fail', message: 'Invalid elapsed time'};
     }
 
