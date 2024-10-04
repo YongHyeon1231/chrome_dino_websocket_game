@@ -32,7 +32,7 @@ export const handleEvent = (io, socket, data) => {
     }
 
     // 메세지로 오는 handlerId에 따라 handlerMappings 객체에서 적절한 핸들러를 찾습니다.
-    const hanlder = handlerMapplings[data.handlerId];
+    const handler = handlerMapplings[data.handlerId];
     // 적절한 핸들러가 없다면 실패처리합니다.
     if (!handler) {
         socket.emit('response', { status: 'fail', message: 'Handler not found' });

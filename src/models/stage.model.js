@@ -16,13 +16,17 @@ const stages = {};
 // }
 
 export const stageModel = {
+    // 초기 스테이지 배열 생성
     createStage: (uuid) => {
-        stages[uuid] = {};
+        stages[uuid] = [];
     },
     getStage: (uuid) => {
         return stages[uuid];
     },
     setStage: (uuid, id, timestamp) => {
         return stages[uuid].push({id, timestamp});
+    },
+    clearStage: (uuid) => {
+        return stages[uuid] = [];
     }
 }
