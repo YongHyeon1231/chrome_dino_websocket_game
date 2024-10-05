@@ -54,7 +54,7 @@ class Score {
         this.stageChanged[stage.id] = true;
 
         // 서버로 이벤트 전송
-        sendEvent(11, {currenStage: previousStage, targetStage: this.currentStage});
+        sendEvent(11, {currentStage: previousStage, targetStage: this.currentStage});
 
         // 아이템 컨트롤러에 현재 스테이지 설정
         if (this.itemController) {

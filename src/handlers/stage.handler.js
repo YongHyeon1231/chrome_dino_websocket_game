@@ -8,7 +8,6 @@ import { calculateTotalScore } from "../utils/calculateTotalScore.js";
 export const moveStageHandler = (userId, payload) => {
     // 유저의 현재 스테이지 배열을 가져오고, 최대 스테이지 ID를 찾는다.
     let currentStages = stageModel.getStage(userId);
-    console.log("currentStage => ", currentStages);
     if (!currentStages.length) {
         return { status: 'fail', message: 'No stages found for user'};
     }
@@ -40,7 +39,7 @@ export const moveStageHandler = (userId, payload) => {
     // 점수 검증
     const serverTime = Date.now();
     const userItems = itemMoel.getUserItems(userId);
-    const totalScore = calculateTotalScore(currentStage, serverTime, true, userItems);
+    const totalScore = calculateTotalScore(currentStages, serverTime, true, userItems);
     
     if (targetStageInfo.score > totalScore) {
         return { status: 'fail', message: 'Invalid compare targetStageInfo score and totalScore'};
@@ -48,6 +47,6 @@ export const moveStageHandler = (userId, payload) => {
 
     // 유저의 스테이지 정보 업데이트
     stageModel.setStage(userId, payload.targetStage, serverTime);
-
+    
     return {status: 'success', handlerId: 11};
 };

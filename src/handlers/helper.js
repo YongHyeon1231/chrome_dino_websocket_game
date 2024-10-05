@@ -2,7 +2,7 @@ import { CLIENT_VERSION } from "../constants.js";
 import { getGameAssets } from "../init/assets.js";
 import { stageModel } from "../models/stage.model.js";
 import { userModel } from "../models/user.model.js"
-import handlerMapplings from "./handlerMapping.js";
+import handlerMappings from "./handlerMapping.js";
 
 
 export const handleDisconnect = (socket, uuid) => {
@@ -23,7 +23,7 @@ export const handleConnection = (socket, uuid) => {
     socket.emit('connection', {uuid: uuid})
 }
 
-export const handleEvent = (io, socket, data) => {
+export const handleEvent = async (io, socket, data) => {
     // 서버에 저장된 클라이언트 배열에서 메세지로 받은 clientVersion을 확인합니다.
     if (!CLIENT_VERSION.includes(data.clientVersion)) {
         // 만약 일치하는 버전이 없다면 response 이벤트로 fail 결과를 전송
@@ -32,7 +32,7 @@ export const handleEvent = (io, socket, data) => {
     }
 
     // 메세지로 오는 handlerId에 따라 handlerMappings 객체에서 적절한 핸들러를 찾습니다.
-    const handler = handlerMapplings[data.handlerId];
+    const handler = handlerMappings[data.handlerId];
     // 적절한 핸들러가 없다면 실패처리합니다.
     if (!handler) {
         socket.emit('response', { status: 'fail', message: 'Handler not found' });
@@ -40,7 +40,7 @@ export const handleEvent = (io, socket, data) => {
     }
 
     // 적절한 핸들러에 userID 와 payload를 전달하고 결과를 받습니다.
-    const response = handler(data.userId, data.payload);
+    const response = await handler(data.userId, data.payload);
     // 만약 결과에 broadcast (모든 유저에게 전달)이 있다면 broadcast 합니다.
     if (response.broadcast) {
         io.emit('response', 'broadcast');
