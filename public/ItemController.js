@@ -34,6 +34,7 @@ class ItemController {
 
     createItem() {
         const stageItems = this.itemUnlockTable.find((stage) => stage.stage_id === this.currentStage).item_ids;
+        console.log("Client createItem => ", stageItems);
         if (stageItems) {
             const itemsList = this.itemImages.filter((item) => stageItems.includes(item.id));
             const index = this.getRandomNumber(0, itemsList.length - 1);
@@ -49,8 +50,8 @@ class ItemController {
                 itemInfo.id,
                 x,
                 y,
-                itemInfo.width,
-                itemInfo.height,
+                itemInfo.width / 1.5,
+                itemInfo.height / 1.5,
                 itemInfo.image
             );
 

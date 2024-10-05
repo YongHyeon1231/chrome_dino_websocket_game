@@ -15,7 +15,7 @@ export const itemPickupHandler = (userId, payload) => {
 
     // 유저의 현재 스테이지 정보 조회
     const currentStages = stageModel.getStage(userId);
-    if (!currenStage.length) {
+    if (!currentStages.length) {
         return { status: 'fail', message: 'No stages found for user'};
     }
     const currentStageId = currentStages[currentStages.length - 1].id;
