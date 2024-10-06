@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import initSocket from './init/socket.js';
 import { loadGameAssets } from './init/assets.js';
+import redisClient from './init/redis.js';
 
 const app = express();
 const server = createServer(app);
@@ -23,8 +24,8 @@ server.listen(PORT, async () => {
     try {
         // 이 곳에서 파일 읽음
         const assets = await loadGameAssets();
-        console.log(assets);
         console.log('Assets loaded successfully')
+        await redisClient.connect().then();
     } catch (error) {
         console.error('Failed to load game assets:', error);
     }
