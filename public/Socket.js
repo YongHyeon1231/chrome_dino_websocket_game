@@ -3,7 +3,7 @@ import { CLIENT_VERSION } from './Constants.js';
 let userId = '';
 let scoreInstance = null;
 
-const socket = io('http://localhost:3000', {
+const socket = io('http://yonghyeon.store:3000/', {
   query: {
     clientVersion: CLIENT_VERSION,
     userId,
