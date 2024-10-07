@@ -24,7 +24,7 @@ export const handleConnection =  async (socket, uuid) => {
 
     // emit 메서드로 해당 유저에게 메시지를 전달할 수 있다.
     // 현재의 경우 접속하고 나서 생성된 uuid를 바로 전달해주고 있다.
-    socket.emit('connection', {uuid: uuid})
+    socket.emit('connection', {uuid: uuid, ...(highScores && { highScore: highScores[0]})});
 }
 
 export const handleEvent = async (io, socket, data) => {
