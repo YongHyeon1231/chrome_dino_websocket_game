@@ -3,12 +3,18 @@ import { createServer } from 'http';
 import initSocket from './init/socket.js';
 import { loadGameAssets } from './init/assets.js';
 import redisClient from './init/redis.js';
+import cors from 'cors';
 
 const app = express();
 const server = createServer(app);
 
 const PORT = 3000;
 
+const corsOptions = {
+    origin: 'http://yonghyeon.store:3000/'
+}
+
+app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
