@@ -2,6 +2,7 @@ import { stageModel } from "../models/stage.model.js";
 import { getGameAssets } from "../init/assets.js";
 import { itemMoel } from "../models/item.model.js";
 import { calculateTotalScore } from "../utils/calculateTotalScore.js";
+import { scoreModel } from "../models/score.model.js";
 
 export const gameStart = (uuid, payload) => {
     // 서버 메모리에 있는 게임 에셋에서 stage 정보를 가지고 온다.
@@ -17,7 +18,7 @@ export const gameStart = (uuid, payload) => {
     return {status: 'success', handlerId: 2};
 }
 
-export const gameEnd = (uuid, payload) => {
+export const gameEnd = async (uuid, payload, io) => {
     // 클라이언트에서 받은 게임 종료 시 타임스탬프와 총 점수
     const { timestamp: gameEndTime, score } = payload;
     const stages = stageModel.getStage(uuid);
@@ -37,7 +38,14 @@ export const gameEnd = (uuid, payload) => {
     }
 
     // 현재 최고 점수를 가져와서 비교
-    // todo...
+    const highScore = await scoreModel.getRankWithScore();
+    const currentHighScore= highScore.length > 0 ? highScore[0].score : 0;
+
+    if (score > currentHighScore) {
+        await scoreModel.addHighScore(uuid, score);
+
+        io.emit('newHighScore', {uuid, score});
+    }
 
     // 모든 검증이 통과된 후, 클라이언트에서 제공한 점수 저장하는 로직
     // saveGameResult(userId, clientScore, gameEndTime);

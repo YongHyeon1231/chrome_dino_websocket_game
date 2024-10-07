@@ -17,7 +17,18 @@ socket.on('response', (data) => {
 socket.on('connection', (data) => {
   console.log('connection: ', data);
   userId = data.uuid;
+  if( scoreInstance && data.highScore) {
+    scoreInstance.setHighScore(data.highScore.score);
+  }
 });
+
+socket.on ('newHighScore', (data) => {
+  console.log(`highScore: ${data.uuid}, score: ${data.score}`);
+
+  if( scoreInstance && data.score) {
+    scoreInstance.setHighScore(data.score);
+  }
+})
 
 const sendEvent = (handlerId, payload) => {
   socket.emit('event', {

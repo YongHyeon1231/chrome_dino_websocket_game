@@ -89,7 +89,8 @@ class Score {
     }
   }
 
-  setHighScore() {
+  setHighScore(score) {
+    console.log("SETHIGHSCORE => ", score);
     this.highScore = score;
   }
 
