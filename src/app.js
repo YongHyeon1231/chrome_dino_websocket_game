@@ -11,7 +11,7 @@ const server = createServer(app);
 const PORT = 3000;
 
 const corsOptions = {
-    origin: 'http://yonghyeon.store:3000/'
+    origin: 'http://yonghyeon.store'
 }
 
 app.use(cors(corsOptions));
