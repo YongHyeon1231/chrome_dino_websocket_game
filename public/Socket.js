@@ -14,6 +14,7 @@ socket.on('response', (data) => {
   console.log(data);
 });
 
+// 서버에서 'connection' 통신을 보낼 때
 socket.on('connection', (data) => {
   console.log('connection: ', data);
   userId = data.uuid;
@@ -22,6 +23,7 @@ socket.on('connection', (data) => {
   }
 });
 
+// 최고 점수 갱신
 socket.on ('newHighScore', (data) => {
   console.log(`highScore: ${data.uuid}, score: ${data.score}`);
 
@@ -39,6 +41,7 @@ const sendEvent = (handlerId, payload) => {
   });
 };
 
+// 싱글톤으로 instance에는 score가 객체로 들어가 점수 저장해두기 index.js에서 호출중
 const setScoreInstance = (instance) => {
     scoreInstance = instance;
 }
